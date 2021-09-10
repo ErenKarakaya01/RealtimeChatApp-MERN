@@ -24,7 +24,10 @@ const Friends = () => {
 
   return (
     <div className="friends">
-      <Friend />
+      <Friend name="Eren" saying="sözler"/>
+      <Friend name="Adar" saying="sözler"/>
+      <Friend name="Yusuf" saying="sözler"/>
+      <Friend name="Serdar" saying="sözler"/>
     </div>
   )
 }

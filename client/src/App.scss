@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Allan&display=swap");
 
 $nav-background: #9efcff;
+$friends-background: #95e1e4f1;
 
 * {
   margin: 0;
@@ -50,19 +51,30 @@ nav {
 }
 
 .friends {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   width: 24em;
   height: calc(100vh - 5em);
   border-right: 0.1em solid rgba(185, 185, 185, 0.11);
 
   .friend {
     height: 5em;
-    background-color: rebeccapurple;
+    background-color: $friends-background;
     display: flex;
     align-items: center;
     padding: 1em;
 
+    .circle {
+      background-color: yellow;
+      height: 4em;
+      width: 4em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+    }
+
     i {
-      font-size: 4em
+      font-size: 3.5em;
     }
 
     .personInfo {

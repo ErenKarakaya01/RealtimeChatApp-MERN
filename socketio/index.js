@@ -5,9 +5,10 @@ let io = require("socket.io")(4200, {
 })
 
 io.on("connection", (socket) => {
-  console.log(32)
   socket.on("joinRoom", () => {
     console.log(23)
     socket.emit("joinRoom", 30)
   })
 })
+
+console.log("Socket.io is listening on port 4200")

@@ -1,13 +1,15 @@
 import React from "react"
 import "../App.css"
 
-const Friend = () => {
+const Friend = ({ name, saying }) => {
   return (
     <div className="friend">
-      <i className="fa fa-user" />
+      <div className="circle">
+        <i className="fa fa-user" />
+      </div>
       <div className="personInfo">
-        <div>ksdlşjgalkjkalsdjgkjasd</div>
-        <div>flkasdjşlkgjklsdjşlkjgs</div>
+        <div>{ name }</div>
+        <div>{ saying }</div>
       </div>
     </div>
   )

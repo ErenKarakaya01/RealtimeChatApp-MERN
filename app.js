@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 
 
 const db =
-  "mongodb+srv://sprinkai:eren96101@chatappdb.l7biy.mongodb.net/ChatAppDB?retryWrites=true&w=majority"
+  "mongodb+srv://sprinkai:eren123@chatappdb.l7biy.mongodb.net/ChatAppDB?retryWrites=true&w=majority"
 
 try {
   async () =>
