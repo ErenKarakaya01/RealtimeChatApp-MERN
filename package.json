@@ -1,0 +1,35 @@
+{
+  "name": "realtime-chat-app",
+  "version": "1.0.0",
+  "description": "Chat App",
+  "main": "index.js",
+  "scripts": {
+    "client-install": "npm install --prefix client",
+    "start": "node app.js",
+    "server": "nodemon app.js --exec babel-node --presets babel-preset-env",
+    "client": "npm start --prefix client",
+    "socketio": "npm start --prefix socketio",
+    "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run socketio\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "author": "Eren",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "@babel/core": "^7.15.5",
+    "@babel/node": "^7.15.4",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^6.2.1",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "mongoose": "^6.0.4",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
+  }
+}
