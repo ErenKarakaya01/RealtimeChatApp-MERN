@@ -5,9 +5,9 @@ let io = require("socket.io")(4200, {
 })
 
 io.on("connection", (socket) => {
-  socket.on("joinRoom", () => {
-    console.log(23)
-    socket.emit("joinRoom", 30)
+  socket.on("joinRoom", (room) => {
+    socket.join(room)
+    console.log(`Joined the room: ${room}`)
   })
 })
 

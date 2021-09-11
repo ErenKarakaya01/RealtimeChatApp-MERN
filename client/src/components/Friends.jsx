@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react"
 import "../App.css"
 import axios from "axios"
-import io from "socket.io-client"
-import Friend from "./Friend"
-
-const socket = io.connect("http://localhost:4200/")
+import Room from "./Room"
 
 const Friends = () => {
   let [friends, setFriends] = useState([])
@@ -16,18 +13,15 @@ const Friends = () => {
       setFriends(friends)
     })() */
     
-    socket.emit("joinRoom", 35)
-    
-    socket.on("joinRoom", number => console.log(36))
   }, [])
 
 
   return (
     <div className="friends">
-      <Friend name="Eren" saying="sözler"/>
-      <Friend name="Adar" saying="sözler"/>
-      <Friend name="Yusuf" saying="sözler"/>
-      <Friend name="Serdar" saying="sözler"/>
+      <Room name="Eren" saying="sözler" room="1" />
+      <Room name="Adar" saying="sözler" room="2" />
+      <Room name="Yusuf" saying="sözler" room="3" />
+      <Room name="Serdar" saying="sözler" room="4" />
     </div>
   )
 }

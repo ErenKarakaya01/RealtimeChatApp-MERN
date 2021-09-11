@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Allan&display=swap");
 
 $nav-background: #9efcff;
-$friends-background: #95e1e4f1;
+$friend-background: #95e1e4f1;
+$friend-background-hover: #ace4e6f1;
 
 * {
   margin: 0;
@@ -23,21 +24,11 @@ nav {
     font-size: 3em;
   }
 
-  a:link {
-    text-decoration: none;
-  }
-
-  a:visited {
-    text-decoration: none;
-    color: black;
-  }
-
-  a:hover {
-    text-decoration: none;
-  }
-
-  a:active {
-    text-decoration: none;
+  a {
+    &:link, &:visited, &:hover, &:active {
+      text-decoration: none;
+      color: black;
+    }
   }
 
   i {
@@ -58,10 +49,15 @@ nav {
 
   .friend {
     height: 5em;
-    background-color: $friends-background;
+    background-color: $friend-background;
     display: flex;
     align-items: center;
     padding: 1em;
+
+    &:hover {
+      background-color: $friend-background-hover;
+      cursor: pointer;
+    }
 
     .circle {
       background-color: yellow;
