@@ -8,6 +8,10 @@ $friend-background-hover: #ace4e6f1;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 nav {
@@ -41,42 +45,99 @@ nav {
   }
 }
 
-.friends {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  width: 24em;
+.main {
   height: calc(100vh - 5em);
-  border-right: 0.1em solid rgba(185, 185, 185, 0.11);
+  display: flex;
 
-  .friend {
-    height: 5em;
-    background-color: $friend-background;
-    display: flex;
-    align-items: center;
-    padding: 1em;
+  .rooms {
+    display: inline-block;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    width: 22%;
+    height: 100%;
+    border-right: 0.1em solid rgba(185, 185, 185, 0.11);
 
-    &:hover {
-      background-color: $friend-background-hover;
-      cursor: pointer;
-    }
-
-    .circle {
-      background-color: yellow;
-      height: 4em;
-      width: 4em;
+    .room {
+      height: 5em;
+      background-color: $friend-background;
       display: flex;
-      justify-content: center;
       align-items: center;
-      border-radius: 50%;
+      padding: 1em;
+
+      &:hover {
+        background-color: $friend-background-hover;
+        cursor: pointer;
+      }
+
+      .circle {
+        background-color: yellow;
+        height: 4em;
+        width: 4em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+      }
+
+      i {
+        font-size: 3.5em;
+      }
+
+      .personInfo {
+        display: flex;
+        flex-direction: column;
+        padding: 2em;
+      }
+    }
+  }
+
+  .chat {
+    display: inline-block;
+    height: 100%;
+    width: 78%;
+    padding-top: 2em;
+    
+    .messages {
+      height: 90%;
+      width: 100%;
+
+      .toMessage {
+        border-radius: 1em 0 1em 1em;
+        background-color: $friend-background-hover;
+        max-width: 80ch;
+        width: fit-content;
+        word-wrap: break-word;
+        padding: 1em;
+        margin: 0 2em;
+        margin-left: auto;
+      }
+
+      .fromMessage {
+        border-radius: 0 1em 1em 1em;
+        background-color: $friend-background;
+        max-width: 80ch;
+        width: fit-content;
+        word-wrap: break-word;
+        padding: 1em;
+        margin: 0 2em;
+        margin-right: auto;
+      }
     }
 
-    i {
-      font-size: 3.5em;
-    }
-
-    .personInfo {
+    .writeMessage {
+      height: 10%;
+      width: 100%;
       display: flex;
-      flex-direction: column;
-      padding: 2em;
+      align-items: center;
+      justify-content: center;
+
+      input {
+        width: 95%;
+        height: 2em;
+        border-radius: 2em;
+        padding: 1.2em;
+        font-size: 1.1em;
+      }
     }
+
   }
 }

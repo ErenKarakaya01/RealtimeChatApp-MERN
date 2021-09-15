@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react'
 import Navbar from "./components/Navbar"
-import Friends from './components/Friends'
+import Main from './components/Main'
 
 const App = () => {
   return (
     <Fragment>
       <Navbar />
-      <Friends />
+      <Main />
     </Fragment>
   )
 }
