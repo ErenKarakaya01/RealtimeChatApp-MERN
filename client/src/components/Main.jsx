@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react"
+import React, { Fragment, useEffect, useState } from "react"
 import "../App.css"
 import io from "socket.io-client"
 import Rooms from "./Rooms"
 import Chat from "./Chat"
+import Navbar from "./Navbar"
 
 const Main = () => {
   const [socket, setSocket] = useState()
@@ -15,10 +16,13 @@ const Main = () => {
   }, [])
 
   return (
-    <div className="main">
-      <Rooms socket={ socket ? socket : null } />
-      <Chat socket={ socket ? socket : null } />
-    </div>
+    <Fragment>
+      <Navbar />
+      <div className="main">
+        <Rooms socket={ socket ? socket : null } />
+        <Chat socket={ socket ? socket : null } />
+      </div>
+    </Fragment>
   )
 }
 

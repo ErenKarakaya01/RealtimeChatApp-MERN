@@ -23,7 +23,7 @@ const Chat = ({ socket }) => {
     socket.on("disconnected", (socketId) => {
       addFromMessage(`${socketId} just disconnected from the room!`)
     })
-  }, [socket])
+  }, [socket, messages])
 
   const addFromMessage = (message) => {
     setMessages((prevMessages) => [

@@ -1,12 +1,15 @@
-import React, { Fragment } from 'react'
-import Navbar from "./components/Navbar"
-import Main from './components/Main'
+import React, { Fragment } from "react"
+import Main from "./components/Main"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 
 const App = () => {
   return (
     <Fragment>
-      <Navbar />
-      <Main />
+      <Router>
+        <Switch>
+          <Main />
+        </Switch>
+      </Router>
     </Fragment>
   )
 }
