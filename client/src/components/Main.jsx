@@ -10,9 +10,9 @@ const Main = () => {
 
   useEffect(() => {
     const newSocket = io("http://localhost:4200")
-    setSocket(newSocket)
+    setSocket(newSocket) // Sets the socket
 
-    return () => newSocket.close()
+    return () => newSocket.close() // Closing the socket
   }, [])
 
   return (

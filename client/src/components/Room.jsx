@@ -9,8 +9,7 @@ const Room = ({ name, saying, room, socket }) => {
 
   const joinRoom = () => {
     if (socket !== null || socket !== undefined) {
-      socket.emit("joinRoom", room)
-      console.log(room)
+      socket.emit("joinRoom", room) // Joins room
     }
   }
 

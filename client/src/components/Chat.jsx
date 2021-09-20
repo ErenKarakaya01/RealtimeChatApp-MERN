@@ -6,14 +6,13 @@ import uuid from "react-uuid"
 
 const Chat = ({ socket }) => {
   const [messages, setMessages] = useState([])
-  const inputRef = useRef(null)
+  const [value, setValue] = useState("")
 
   useEffect(() => {
-    if (socket === null || socket === undefined) return
+    if (socket === null || socket === undefined) return // If socket is not connected returns the function
 
     socket.on("joined", (socketId) => {
       addFromMessage(`${socketId} just joined the room!`)
-      console.log(messages)
     })
 
     socket.on("receiveMessage", (message) => {
@@ -49,12 +48,16 @@ const Chat = ({ socket }) => {
     if (event.key === "Enter") {
       if (socket === null || socket === undefined) return
 
-      let message = event.target.value
-      event.target.value = ""
+      let message = value
+      setValue(prevValue => "")
 
       addToMessage(message)
-      socket.emit("sendMessage", message)
+      socket.emit("sendMessage", message) // Sends message
     }
+  }
+
+  const handleChange = (event) => {
+    setValue(prevValue => event.target.value)
   }
 
   return (
@@ -64,9 +67,10 @@ const Chat = ({ socket }) => {
       </div>
       <div className="writeMessage">
         <input
-          ref={inputRef}
           type="text"
+          value={value}
           onKeyDown={messageHandler}
+          onChange={handleChange}
           autoFocus
         />
       </div>
