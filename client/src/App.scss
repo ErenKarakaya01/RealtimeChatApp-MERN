@@ -1,8 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Allan&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap");
 
 $nav-background: #9efcff;
 $friend-background: #95e1e4f1;
 $friend-background-hover: #ace4e6f1;
+$registerFormBG: rgba(201, 204, 204, 0.774);
 
 * {
   margin: 0;
@@ -29,14 +31,17 @@ nav {
   }
 
   a {
-    &:link, &:visited, &:hover, &:active {
+    &:link,
+    &:visited,
+    &:hover,
+    &:active {
       text-decoration: none;
       color: black;
     }
   }
 
   i {
-    font-size: 40px !important;
+    font-size: 3em !important;
     margin: 0 0.4em;
   }
 
@@ -95,7 +100,7 @@ nav {
     height: 100%;
     width: 78%;
     padding-top: 2em;
-    
+
     .messages {
       height: 90%;
       width: 100%;
@@ -140,6 +145,124 @@ nav {
         font-size: 1.1em;
       }
     }
+  }
+}
 
+.register {
+  background-image: url("./background/register_bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+  form {
+    background-color: $registerFormBG;
+    border-radius: 2em;
+    transition: box-shadow 1s ease-in-out;
+
+    &#focused {
+      box-shadow: inset 0 0 3em 0 rgba(146, 221, 255, 0.651);
+      transition: box-shadow 1s ease-in-out;
+    }
+
+    &#notFocused {
+      box-shadow: 0 0 3em 0 rgba(146, 221, 255, 0.651);
+      transition: box-shadow 1s ease-in-out;
+    }
+
+    div {
+      text-align: center;
+      height: min-content;
+      margin: 0;
+      padding: 0;
+    }
+
+    i {
+      font-size: 6em !important;
+      margin: 0.5em 0;
+      padding: 0;
+    }
+
+    * {
+      margin: 1em;
+    }
+
+    label {
+      font-family: "Indie Flower", cursive;
+      font-size: 1.5em;
+    }
+
+    input {
+      border: 0.1em solid rgba(146, 221, 255, 0.651);
+      border-radius: 0.6em;
+      font-size: 1.1em;
+      padding: 0.5em;
+    }
+
+    .submitButton {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .btn {
+        font-family: "Indie Flower", cursive;
+        position: relative;
+        padding: 1rem 3rem;
+        font-size: 1.5rem;
+        line-height: 1.5;
+        color: black;
+        text-decoration: none;
+        background-color: white;
+        border: transparent;
+        outline: transparent;
+        cursor: pointer;
+        user-select: none;
+        white-space: nowrap;
+        animation: glow 8s linear infinite;
+        font-weight: 900;
+
+        &-gradient {
+          background: linear-gradient(90deg, #a8a8a8, #757575, #a8a8a8);
+          background-size: 300%;
+          border-radius: 2em;
+
+          &::before {
+            position: absolute;
+            content: "";
+            top: -0.1em;
+            left: -0.1em;
+            bottom: -0.1em;
+            right: -0.1em;
+            z-index: -1;
+            background: inherit;
+            background-size: inherit;
+            border-radius: 4em;
+            opacity: 0;
+            transition: 0.5s;
+          }
+
+          &:hover {
+            opacity: 0.8;
+          }
+
+          &:hover::before {
+            opacity: 1;
+            filter: blur(20px);
+            animation: glow 8s linear infinite;
+          }
+        }
+      }
+
+      @keyframes glow {
+        to {
+          background-position: 300%;
+        }
+      }
+    }
   }
 }

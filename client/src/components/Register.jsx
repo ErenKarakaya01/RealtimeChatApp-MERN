@@ -1,7 +1,10 @@
 import React, { useState } from "react"
 import axios from "axios"
+import "../App.css"
+import "../../node_modules/font-awesome/css/font-awesome.min.css"
 
 const Register = () => {
+  const [focused, setFocused] = useState(false)
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -28,9 +31,20 @@ const Register = () => {
     }
   }
 
+  const handleFocus = (e) => {
+    if (!focused) setFocused((prevFocused) => !focused)
+  }
+
+  const handleFocusOut = (e) => {
+    if (focused) setFocused((prevFocused) => !focused)
+  }
+
   return (
     <div className="register">
-      <form className="registerForm" onSubmit={handleSubmit}>
+      <form id={focused ? "focused" : "notFocused"} onSubmit={handleSubmit}>
+        <div>
+          <i className="fa fa-user" />
+        </div>
         <table>
           <tbody>
             <tr>
@@ -45,6 +59,8 @@ const Register = () => {
                   placeholder="Name"
                   value={form.name}
                   onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleFocusOut}
                 />
               </td>
             </tr>
@@ -60,6 +76,8 @@ const Register = () => {
                   placeholder="Email"
                   value={form.email}
                   onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleFocusOut}
                 />
               </td>
             </tr>
@@ -75,6 +93,8 @@ const Register = () => {
                   placeholder="Password"
                   value={form.password}
                   onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleFocusOut}
                 />
               </td>
             </tr>
@@ -90,12 +110,18 @@ const Register = () => {
                   placeholder="Confirm Password"
                   value={form.password2}
                   onChange={handleChange}
+                  onFocus={handleFocus}
+                  onBlur={handleFocusOut}
                 />
               </td>
             </tr>
           </tbody>
         </table>
-        <button type="submit">Submit</button>
+        <div className="submitButton">
+          <button className="btn btn-gradient" type="submit">
+            Register
+          </button>
+        </div>
       </form>
     </div>
   )

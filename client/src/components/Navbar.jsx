@@ -8,7 +8,7 @@ const Navbar = () => {
     <Router>
       <nav>
         <div className="left">
-          <NavLink to="/" >SprinkaiChat</NavLink>
+          <NavLink to="/">SprinkaiChat</NavLink>
         </div>
         <div className="right">
           <i className="fa fa-plus" />
