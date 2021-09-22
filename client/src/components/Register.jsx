@@ -1,10 +1,14 @@
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import axios from "axios"
 import "../App.css"
 import "../../node_modules/font-awesome/css/font-awesome.min.css"
 
 const Register = () => {
   const [focused, setFocused] = useState(false)
+  const [boxShadow, setBoxShadow] = useState({
+    boxShadow: "0 0 3em 0 rgba(146, 221, 255, 0.651)",
+  })
+  const formRef = useRef(null)
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -32,16 +36,35 @@ const Register = () => {
   }
 
   const handleFocus = (e) => {
-    if (!focused) setFocused((prevFocused) => !focused)
+    if (!focused) {
+      setFocused((prevFocused) => !focused)
+      setBoxShadow({
+        transition: "all 1s ease-in-out forwards",
+        boxShadow: "inset 0 0 3em 0 rgba(146, 221, 255, 0.651)",
+      })
+    }
   }
 
   const handleFocusOut = (e) => {
-    if (focused) setFocused((prevFocused) => !focused)
+    if (focused) {
+      setFocused((prevFocused) => !focused)
+      setBoxShadow({
+        transition: "all 1s ease-in-out forwards",
+        boxShadow: "0 0 3em 0 rgba(146, 221, 255, 0.651)",
+      })
+      setTimeout(() => {
+        formRef.current.style = boxShadow
+      }, 20)
+    }
   }
 
   return (
     <div className="register">
-      <form id={focused ? "focused" : "notFocused"} onSubmit={handleSubmit}>
+      <form
+        ref={formRef}
+        id={focused ? "focused" : "notFocused"}
+        onSubmit={handleSubmit}
+      >
         <div>
           <i className="fa fa-user" />
         </div>

@@ -163,16 +163,31 @@ nav {
   form {
     background-color: $registerFormBG;
     border-radius: 2em;
-    transition: box-shadow 1s ease-in-out;
+
+    @keyframes inAnimation {
+      from {
+        box-shadow: 0 0 3em 0 rgba(146, 221, 255, 0.651);
+      }
+      to {
+        box-shadow: inset 0 0 3em 0 rgba(146, 221, 255, 0.651);
+      }
+    }
+    @keyframes outAnimation {
+      0% {
+        box-shadow: inset 0 0 3em 0 rgba(146, 221, 255, 0.651);
+      }
+      100% {
+        box-shadow: 0 0 3em 0 rgba(146, 221, 255, 0.651);
+      }
+    }
+
 
     &#focused {
-      box-shadow: inset 0 0 3em 0 rgba(146, 221, 255, 0.651);
-      transition: box-shadow 1s ease-in-out;
+      animation: inAnimation 2s ease-in-out 2s forwards;
     }
 
     &#notFocused {
-      box-shadow: 0 0 3em 0 rgba(146, 221, 255, 0.651);
-      transition: box-shadow 1s ease-in-out;
+      animation: outAnimation 2s ease-in-out 2s forwards;
     }
 
     div {
