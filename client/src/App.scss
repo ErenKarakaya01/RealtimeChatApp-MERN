@@ -164,30 +164,12 @@ nav {
     background-color: $registerFormBG;
     border-radius: 2em;
 
-    @keyframes inAnimation {
-      from {
-        box-shadow: 0 0 3em 0 rgba(146, 221, 255, 0.651);
-      }
-      to {
-        box-shadow: inset 0 0 3em 0 rgba(146, 221, 255, 0.651);
-      }
-    }
-    @keyframes outAnimation {
-      0% {
-        box-shadow: inset 0 0 3em 0 rgba(146, 221, 255, 0.651);
-      }
-      100% {
-        box-shadow: 0 0 3em 0 rgba(146, 221, 255, 0.651);
-      }
-    }
-
-
     &#focused {
-      animation: inAnimation 2s ease-in-out 2s forwards;
+      box-shadow: inset 0 0 3em 0 rgba(146, 221, 255, 0.651);
     }
 
     &#notFocused {
-      animation: outAnimation 2s ease-in-out 2s forwards;
+      box-shadow: 0 0 3em 0 rgba(146, 221, 255, 0.651);
     }
 
     div {
