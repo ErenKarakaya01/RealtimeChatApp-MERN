@@ -9,7 +9,7 @@ const Main = () => {
   const [socket, setSocket] = useState()
 
   useEffect(() => {
-    const newSocket = io("http://localhost:4200")
+    const newSocket = io("http://localhost:8080")
     setSocket(newSocket) // Sets the socket
 
     return () => newSocket.close() // Closing the socket

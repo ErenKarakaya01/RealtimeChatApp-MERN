@@ -8,8 +8,7 @@
     "start": "node app.js",
     "server": "nodemon app.js --exec babel-node --presets babel-preset-env",
     "client": "npm start --prefix client",
-    "socketio": "npm start --prefix socketio",
-    "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run socketio\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "Eren",
@@ -26,10 +25,12 @@
     "bcryptjs": "^2.4.3",
     "concurrently": "^6.2.1",
     "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "mongoose": "^6.0.6",
     "passport": "^0.4.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "socket.io": "^4.2.0"
   }
 }
