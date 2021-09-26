@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect } from "react"
 import "../App.css"
 import ToMessage from "./ToMessage"
 import FromMessage from "./FromMessage"
@@ -44,7 +44,7 @@ const Chat = ({ socket }) => {
     ])
   }
 
-  const messageHandler = (event) => {
+  const messageHandler = (event) => { // Sending message to other sockets
     if (event.key === "Enter") {
       if (socket === null || socket === undefined) return
 

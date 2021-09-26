@@ -60,9 +60,9 @@ try {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
+    console.log("MongoDB connected...")
   })()
 
-  console.log("MongoDB connected...")
 } catch (e) {
   console.log(e)
 }
@@ -72,7 +72,6 @@ app.use("/users", require("./routes/users.js"))
 
 // Socket.io
 io.on("connection", (socket) => {
-  console.log(socket.id)
   let lastRoom
 
   socket.on("joinRoom", (room) => {
@@ -81,7 +80,6 @@ io.on("connection", (socket) => {
     lastRoom = room
 
     socket.to(room).emit("joined", socket.id)
-    console.log(`Joined the room: ${room}`)
   })
 
   socket.on("sendMessage", (message) => {
@@ -89,7 +87,6 @@ io.on("connection", (socket) => {
   })
 
   socket.on("disconnect", () => {
-    console.log(lastRoom)
     socket.to(lastRoom).emit("disconnected", socket.id)
   })
 })

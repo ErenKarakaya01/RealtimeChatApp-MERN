@@ -5,11 +5,11 @@ const passport = require("passport")
 
 // Load User model
 const User = require("../models/User")
-const { forwardAuthenticated } = require("../config/auth")
 
-router.get("/login", (req,res) => {
-  console.log("hi")
-  res.send("hi")
+// Get isAuthenticated
+router.get("/isauthenticated", (req, res) => {
+  console.log(req.user)
+  res.send({ isAuthenticated: req.isAuthenticated() })
 })
 
 // Register
@@ -44,13 +44,15 @@ router.post("/register", (req, res) => {
           errors,
         })
       } else {
-        const newUser = new User({ // Creating new user
+        const newUser = new User({
+          // Creating new user
           name,
           email,
           password,
         })
 
-        bcrypt.genSalt(10, (err, salt) => { // Encrypting the password
+        bcrypt.genSalt(10, (err, salt) => {
+          // Encrypting the password
           bcrypt.hash(newUser.password, salt, (err, hash) => {
             if (err) throw err
             newUser.password = hash
@@ -72,9 +74,21 @@ router.post("/register", (req, res) => {
 
 // Login
 router.post("/login", (req, res, next) => {
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/users/login",
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err)
+    }
+
+    if (!user) {
+      return res.send({ isLoggedIn: false })
+    }
+
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err)
+      }
+      return res.send({ isLoggedIn: true })
+    })
   })(req, res, next)
 })
 

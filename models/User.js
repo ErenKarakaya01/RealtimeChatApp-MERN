@@ -13,13 +13,13 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  rooms: [{ type: mongoose.Types.ObjectId, ref: "User" }],
+  rooms: [{ type: mongoose.Types.ObjectId, ref: "rooms" }],
   date: {
     type: Date,
     default: Date.now,
   },
 })
 
-const User = mongoose.model("User", UserSchema)
+const User = mongoose.model("users", UserSchema)
 
 module.exports = User

@@ -1,11 +1,14 @@
 import React, { useState } from "react"
 import axios from "axios"
+import { Redirect, useHistory } from "react-router-dom"
 import "../App.css"
 import "../../node_modules/font-awesome/css/font-awesome.min.css"
 
-const Register = () => {
+const Register = ({ isAuthenticated }) => {
+  let history = useHistory()
   const [focused, setFocused] = useState(false)
   const [form, setForm] = useState({
+    // Contains form input values
     name: "",
     email: "",
     password: "",
@@ -13,6 +16,7 @@ const Register = () => {
   })
 
   const handleChange = (event) => {
+    // Handles change for any input field
     let name = event.target.name
     let value = event.target.value
 
@@ -25,12 +29,14 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     let res = await axios.post("/users/register", form)
-    console.log(res.data)
-    if (!res.data.isRegistered) {
-      console.log(res)
+
+    if (res.data.isRegistered) {
+      return history.push("/users/login")
     }
+    // not finished
   }
 
+  // Toggling focused value
   const handleFocus = (e) => {
     if (!focused) setFocused((prevFocused) => !focused)
   }
@@ -39,8 +45,10 @@ const Register = () => {
     if (focused) setFocused((prevFocused) => !focused)
   }
 
+  if (isAuthenticated) history.push("/") // Is authenticated
+
   return (
-    <div className="register">
+    <div className="form">
       <form id={focused ? "focused" : "notFocused"} onSubmit={handleSubmit}>
         <div>
           <i className="fa fa-user" />
