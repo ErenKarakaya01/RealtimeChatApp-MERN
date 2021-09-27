@@ -3,18 +3,24 @@ import axios from "axios"
 import { Redirect } from "react-router-dom"
 import "../App.css"
 import "../../node_modules/font-awesome/css/font-awesome.min.css"
+import { UncontrolledAlert } from "reactstrap"
 
 const Login = ({ isAuthenticated }) => {
   const [redirect, setRedirect] = useState(false)
+
   const [focused, setFocused] = useState(false)
+
+  // Contains form input values
   const [form, setForm] = useState({
-    // Contains form input values
     email: "",
     password: "",
   })
 
+  // Alerts
+  const [errors, setErrors] = useState([])
+
+  // Handles change for any input field
   const handleChange = (event) => {
-    // Handles change for any input field
     let name = event.target.name
     let value = event.target.value
 
@@ -27,9 +33,20 @@ const Login = ({ isAuthenticated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     let res = await axios.post("/users/login", form)
-    
+
     if (res.data.isLoggedIn) {
-      setFocused(true)
+      // If logging is successful go to dashboard else show errors
+      setErrors((prev) => [])
+      setRedirect((prev) => true)
+    } else {
+      setErrors((prev) => [])
+      setErrors((prev) =>
+        res.data.errors.map((error) => (
+          <UncontrolledAlert color="danger">
+            {error}
+          </UncontrolledAlert>
+        ))
+      )
     }
   }
 
@@ -42,15 +59,15 @@ const Login = ({ isAuthenticated }) => {
     if (focused) setFocused((prevFocused) => !focused)
   }
 
-
-
   if (isAuthenticated) return <Redirect to="/" /> // Is authenticated
-  if (isAuthenticated === null || isAuthenticated === undefined) return <div className="skeleton" /> // Skeleton loading effect
+  if (isAuthenticated === null || isAuthenticated === undefined)
+    return <div className="skeleton" /> // Skeleton loading effect
   if (redirect) return <Redirect to="/" /> // If submit is successful redirect to dashboard
 
   return (
     <div className="form">
       <form id={focused ? "focused" : "notFocused"} onSubmit={handleSubmit}>
+        {errors}
         <div>
           <i className="fa fa-user" />
         </div>

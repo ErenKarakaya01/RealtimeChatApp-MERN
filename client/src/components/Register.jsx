@@ -3,19 +3,29 @@ import axios from "axios"
 import { Redirect } from "react-router-dom"
 import "../App.css"
 import "../../node_modules/font-awesome/css/font-awesome.min.css"
+import { Alert } from "reactstrap"
 
 const Register = ({ isAuthenticated }) => {
+  const [redirect, setRedirect] = useState(false)
+
   const [focused, setFocused] = useState(false)
+
+  // Contains form input values
   const [form, setForm] = useState({
-    // Contains form input values
     name: "",
     email: "",
     password: "",
     password2: "",
   })
 
+  // Alerts
+  const [errors, setErrors] = useState([])
+
+  const [visible, setVisible] = useState(true)
+  const onDismiss = () => setVisible(false)
+
+  // Handles change for any input field
   const handleChange = (event) => {
-    // Handles change for any input field
     let name = event.target.name
     let value = event.target.value
 
@@ -29,10 +39,18 @@ const Register = ({ isAuthenticated }) => {
     e.preventDefault()
     let res = await axios.post("/users/register", form)
 
-    if (res.data.isRegistered) {
-      return 
+    if (res.data.isRegistered) { // If logging is successful go to login page else show errors
+      setErrors((prev) => [])
+      setRedirect((prev) => true)
+    } else {
+      setErrors((prev) =>
+        res.data.errors.map((error) => (
+          <Alert color="danger" isOpen={visible} toggle={onDismiss}>
+            {error}
+          </Alert>
+        ))
+      )
     }
-    // not finished
   }
 
   // Toggling focused value
@@ -44,13 +62,14 @@ const Register = ({ isAuthenticated }) => {
     if (focused) setFocused((prevFocused) => !focused)
   }
 
-  
-
   if (isAuthenticated) return <Redirect to="/" /> // Is authenticated
-  if (isAuthenticated === null || isAuthenticated === undefined) return <div className="skeleton" /> // Skeleton loading effect
+  if (isAuthenticated === null || isAuthenticated === undefined)
+    return <div className="skeleton" /> // Skeleton loading effect
+  if (redirect) return <Redirect to="/users/login" /> // If submit is successful redirect to dashboard
 
   return (
     <div className="form">
+      {errors}
       <form id={focused ? "focused" : "notFocused"} onSubmit={handleSubmit}>
         <div>
           <i className="fa fa-user" />
