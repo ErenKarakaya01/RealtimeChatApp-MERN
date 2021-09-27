@@ -1,11 +1,11 @@
 import React, { useState } from "react"
 import axios from "axios"
-import { useHistory } from "react-router-dom"
+import { Redirect } from "react-router-dom"
 import "../App.css"
 import "../../node_modules/font-awesome/css/font-awesome.min.css"
 
 const Login = ({ isAuthenticated }) => {
-  let history = useHistory()
+  const [redirect, setRedirect] = useState(false)
   const [focused, setFocused] = useState(false)
   const [form, setForm] = useState({
     // Contains form input values
@@ -27,9 +27,9 @@ const Login = ({ isAuthenticated }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     let res = await axios.post("/users/login", form)
-    console.log(res.data.isLoggedIn)
+    
     if (res.data.isLoggedIn) {
-      history.push("../")
+      setFocused(true)
     }
   }
 
@@ -42,7 +42,11 @@ const Login = ({ isAuthenticated }) => {
     if (focused) setFocused((prevFocused) => !focused)
   }
 
-  if (isAuthenticated) history.push("/") // Is authenticated
+
+
+  if (isAuthenticated) return <Redirect to="/" /> // Is authenticated
+  if (isAuthenticated === null || isAuthenticated === undefined) return <div className="skeleton" /> // Skeleton loading effect
+  if (redirect) return <Redirect to="/" /> // If submit is successful redirect to dashboard
 
   return (
     <div className="form">

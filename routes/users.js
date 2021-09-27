@@ -8,7 +8,6 @@ const User = require("../models/User")
 
 // Get isAuthenticated
 router.get("/isauthenticated", (req, res) => {
-  console.log(req.user)
   res.send({ isAuthenticated: req.isAuthenticated() })
 })
 

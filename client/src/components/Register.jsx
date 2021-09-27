@@ -1,11 +1,10 @@
 import React, { useState } from "react"
 import axios from "axios"
-import { Redirect, useHistory } from "react-router-dom"
+import { Redirect } from "react-router-dom"
 import "../App.css"
 import "../../node_modules/font-awesome/css/font-awesome.min.css"
 
 const Register = ({ isAuthenticated }) => {
-  let history = useHistory()
   const [focused, setFocused] = useState(false)
   const [form, setForm] = useState({
     // Contains form input values
@@ -31,7 +30,7 @@ const Register = ({ isAuthenticated }) => {
     let res = await axios.post("/users/register", form)
 
     if (res.data.isRegistered) {
-      return history.push("/users/login")
+      return 
     }
     // not finished
   }
@@ -45,7 +44,10 @@ const Register = ({ isAuthenticated }) => {
     if (focused) setFocused((prevFocused) => !focused)
   }
 
-  if (isAuthenticated) history.push("/") // Is authenticated
+  
+
+  if (isAuthenticated) return <Redirect to="/" /> // Is authenticated
+  if (isAuthenticated === null || isAuthenticated === undefined) return <div className="skeleton" /> // Skeleton loading effect
 
   return (
     <div className="form">

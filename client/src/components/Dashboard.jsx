@@ -16,8 +16,11 @@ const Dashboard = ({ isAuthenticated }) => {
     
     return () => newSocket.close() // Closing the socket
   }, [])
+
   
-  if (!isAuthenticated) return <Redirect to={{ pathname: "/users/login" }} /> // Is authenticated
+  
+  if (!isAuthenticated) return <Redirect to="/users/login" /> // Is authenticated
+  if (isAuthenticated === null || isAuthenticated === undefined) return <div className="skeleton" /> // Skeleton loading effect
 
   return (
     <Fragment>
