@@ -1,6 +1,4 @@
 import React from "react"
-import "../../node_modules/font-awesome/css/font-awesome.min.css"
-import "../App.css"
 import { NavLink, BrowserRouter as Router } from "react-router-dom"
 
 const Navbar = () => {

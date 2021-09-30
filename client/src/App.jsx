@@ -15,12 +15,19 @@ import Logout from "./components/Logout"
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null)
 
+  // Context value
+  const [refresh, setRefresh] = useState(false)
+  const value = { refresh, setRefresh }
+
   useEffect(() => {
     ;(async () => {
       let isAuthenticated = await axios.get("/users/isauthenticated") // Getting isAuthenticated info
       setIsAuthenticated(isAuthenticated.data.isAuthenticated)
     })()
-  }, [isAuthenticated])
+  }, [isAuthenticated, refresh])
+
+  if (isAuthenticated === null || isAuthenticated === undefined)
+    return <Loading />
 
   if (isAuthenticated === null || isAuthenticated === undefined)
     return <Loading />

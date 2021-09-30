@@ -1,9 +1,8 @@
 import React, { useState } from "react"
 import axios from "axios"
 import { Redirect } from "react-router-dom"
-import "../App.css"
-import "../../node_modules/font-awesome/css/font-awesome.min.css"
 import { UncontrolledAlert } from "reactstrap"
+import nodejs from "../images/nodejs.png"
 
 const Login = ({ isAuthenticated }) => {
   const [redirect, setRedirect] = useState(false)

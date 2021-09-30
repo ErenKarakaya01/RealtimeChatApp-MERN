@@ -1,9 +1,8 @@
 import React, { useState } from "react"
 import axios from "axios"
 import { Redirect } from "react-router-dom"
-import "../App.css"
-import "../../node_modules/font-awesome/css/font-awesome.min.css"
 import { Alert } from "reactstrap"
+import nodejs from "../images/nodejs.png"
 
 const Register = ({ isAuthenticated }) => {
   const [redirect, setRedirect] = useState(false)
@@ -39,7 +38,8 @@ const Register = ({ isAuthenticated }) => {
     e.preventDefault()
     let res = await axios.post("/users/register", form)
 
-    if (res.data.isRegistered) { // If logging is successful go to login page else show errors
+    if (res.data.isRegistered) {
+      // If logging is successful go to login page else show errors
       setErrors((prev) => [])
       setRedirect((prev) => true)
     } else {

@@ -15,7 +15,8 @@ const Logout = ({ isAuthenticated }) => {
   }, [])
 
   // Is authenticated
-  if (redirect) return <Redirect to="/users/login" />
+  if (!isAuthenticated) return <Redirect to="/" />
+  else if (redirect) return <Redirect to="/users/login" />
   else return <Loading />
 }
 
