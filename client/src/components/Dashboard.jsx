@@ -5,10 +5,11 @@ import io from "socket.io-client"
 import Rooms from "./Rooms"
 import Chat from "./Chat"
 import Navbar from "./Navbar"
+import Loading from "./Loading"
 
 const Dashboard = ({ isAuthenticated }) => {
   
-  const [socket, setSocket] = useState()
+  const [socket, setSocket] = useState(null)
   
   useEffect(() => {
     const newSocket = io("http://localhost:8080")
@@ -20,14 +21,15 @@ const Dashboard = ({ isAuthenticated }) => {
   
   
   if (!isAuthenticated) return <Redirect to="/users/login" /> // Is authenticated
-  if (isAuthenticated === null || isAuthenticated === undefined) return <div className="skeleton" /> // Skeleton loading effect
+  if (socket === null || socket === undefined)
+    return <Loading />
 
   return (
     <Fragment>
       <Navbar />
       <div className="dashboard">
-        <Rooms socket={ socket ? socket : null } />
-        <Chat socket={ socket ? socket : null } />
+        <Rooms socket={ socket } />
+        <Chat socket={ socket } />
       </div>
     </Fragment>
   )

@@ -42,9 +42,7 @@ const Login = ({ isAuthenticated }) => {
       setErrors((prev) => [])
       setErrors((prev) =>
         res.data.errors.map((error) => (
-          <UncontrolledAlert color="danger">
-            {error}
-          </UncontrolledAlert>
+          <UncontrolledAlert color="danger">{error}</UncontrolledAlert>
         ))
       )
     }
@@ -60,8 +58,6 @@ const Login = ({ isAuthenticated }) => {
   }
 
   if (isAuthenticated) return <Redirect to="/" /> // Is authenticated
-  if (isAuthenticated === null || isAuthenticated === undefined)
-    return <div className="skeleton" /> // Skeleton loading effect
   if (redirect) return <Redirect to="/" /> // If submit is successful redirect to dashboard
 
   return (

@@ -63,8 +63,6 @@ const Register = ({ isAuthenticated }) => {
   }
 
   if (isAuthenticated) return <Redirect to="/" /> // Is authenticated
-  if (isAuthenticated === null || isAuthenticated === undefined)
-    return <div className="skeleton" /> // Skeleton loading effect
   if (redirect) return <Redirect to="/users/login" /> // If submit is successful redirect to dashboard
 
   return (

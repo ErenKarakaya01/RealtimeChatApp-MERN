@@ -2,8 +2,15 @@ import React, { useEffect, useState } from "react"
 import Dashboard from "./components/Dashboard"
 import Register from "./components/Register"
 import Login from "./components/Login"
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  withRouter,
+} from "react-router-dom"
 import axios from "axios"
+import Loading from "./components/Loading"
+import Logout from "./components/Logout"
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null)
@@ -14,6 +21,9 @@ const App = () => {
       setIsAuthenticated(isAuthenticated.data.isAuthenticated)
     })()
   }, [isAuthenticated])
+
+  if (isAuthenticated === null || isAuthenticated === undefined)
+    return <Loading />
 
   return (
     <Router>
@@ -26,6 +36,9 @@ const App = () => {
         </Route>
         <Route path="/users/login">
           <Login isAuthenticated={isAuthenticated} />
+        </Route>
+        <Route path="/users/logout">
+          <Logout isAuthenticated={isAuthenticated} />
         </Route>
       </Switch>
     </Router>
