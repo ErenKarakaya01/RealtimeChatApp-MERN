@@ -1,9 +1,8 @@
 import React, { useState } from "react"
 import axios from "axios"
 import { Redirect } from "react-router-dom"
-import "../App.css"
-import "../../node_modules/font-awesome/css/font-awesome.min.css"
 import { UncontrolledAlert } from "reactstrap"
+import nodejs from "../images/nodejs.png"
 
 const Login = ({ isAuthenticated }) => {
   const [redirect, setRedirect] = useState(false)
@@ -42,9 +41,7 @@ const Login = ({ isAuthenticated }) => {
       setErrors((prev) => [])
       setErrors((prev) =>
         res.data.errors.map((error) => (
-          <UncontrolledAlert color="danger">
-            {error}
-          </UncontrolledAlert>
+          <UncontrolledAlert color="danger">{error}</UncontrolledAlert>
         ))
       )
     }
@@ -59,64 +56,66 @@ const Login = ({ isAuthenticated }) => {
     if (focused) setFocused((prevFocused) => !focused)
   }
 
-  if (isAuthenticated) return <Redirect to="/" /> // Is authenticated
-  if (isAuthenticated === null || isAuthenticated === undefined)
-    return <div className="skeleton" /> // Skeleton loading effect
-  if (redirect) return <Redirect to="/" /> // If submit is successful redirect to dashboard
-
-  return (
-    <div className="form">
-      <form id={focused ? "focused" : "notFocused"} onSubmit={handleSubmit}>
-        {errors}
-        <div>
-          <i className="fa fa-user" />
-        </div>
-        <table>
-          <tbody>
-            <tr>
-              <th>
-                <label htmlFor="email">E-mail:</label>
-              </th>
-              <td>
-                <input
-                  type="text"
-                  id="email"
-                  name="email"
-                  placeholder="Email"
-                  value={form.email}
-                  onChange={handleChange}
-                  onFocus={handleFocus}
-                  onBlur={handleFocusOut}
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <label htmlFor="password">Password:</label>
-              </th>
-              <td>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="Password"
-                  value={form.password}
-                  onChange={handleChange}
-                  onFocus={handleFocus}
-                  onBlur={handleFocusOut}
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div className="submitButton">
-          <button className="btn btn-gradient" type="submit">
-            Login
-          </button>
-        </div>
-      </form>
-    </div>
-  )
+  // Is authenticated
+  if (isAuthenticated) return <Redirect to="/" />
+  // If submit is successful redirect to dashboard
+  else if (redirect) return <Redirect to="/" />
+  else {
+    return (
+      <div className="form">
+        <form id={focused ? "focused" : "notFocused"} onSubmit={handleSubmit}>
+          {errors}
+          {redirect}
+          <div>
+            <img src={nodejs} alt="nodejs" />
+          </div>
+          <table>
+            <tbody>
+              <tr>
+                <th>
+                  <label htmlFor="email">E-mail:</label>
+                </th>
+                <td>
+                  <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    placeholder="Email"
+                    value={form.email}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    onBlur={handleFocusOut}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <label htmlFor="password">Password:</label>
+                </th>
+                <td>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                    value={form.password}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    onBlur={handleFocusOut}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="submitButton">
+            <button className="btn btn-gradient" type="submit">
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
+    )
+  }
 }
 
 export default Login

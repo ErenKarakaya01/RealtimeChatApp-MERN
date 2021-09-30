@@ -1,9 +1,8 @@
 import React, { useState } from "react"
 import axios from "axios"
 import { Redirect } from "react-router-dom"
-import "../App.css"
-import "../../node_modules/font-awesome/css/font-awesome.min.css"
 import { Alert } from "reactstrap"
+import nodejs from "../images/nodejs.png"
 
 const Register = ({ isAuthenticated }) => {
   const [redirect, setRedirect] = useState(false)
@@ -39,7 +38,8 @@ const Register = ({ isAuthenticated }) => {
     e.preventDefault()
     let res = await axios.post("/users/register", form)
 
-    if (res.data.isRegistered) { // If logging is successful go to login page else show errors
+    if (res.data.isRegistered) {
+      // If logging is successful go to login page else show errors
       setErrors((prev) => [])
       setRedirect((prev) => true)
     } else {
@@ -62,98 +62,99 @@ const Register = ({ isAuthenticated }) => {
     if (focused) setFocused((prevFocused) => !focused)
   }
 
-  if (isAuthenticated) return <Redirect to="/" /> // Is authenticated
-  if (isAuthenticated === null || isAuthenticated === undefined)
-    return <div className="skeleton" /> // Skeleton loading effect
-  if (redirect) return <Redirect to="/users/login" /> // If submit is successful redirect to dashboard
-
-  return (
-    <div className="form">
-      {errors}
-      <form id={focused ? "focused" : "notFocused"} onSubmit={handleSubmit}>
-        <div>
-          <i className="fa fa-user" />
-        </div>
-        <table>
-          <tbody>
-            <tr>
-              <th>
-                <label htmlFor="name">Name:</label>
-              </th>
-              <td>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Name"
-                  value={form.name}
-                  onChange={handleChange}
-                  onFocus={handleFocus}
-                  onBlur={handleFocusOut}
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <label htmlFor="email">E-mail:</label>
-              </th>
-              <td>
-                <input
-                  type="text"
-                  id="email"
-                  name="email"
-                  placeholder="Email"
-                  value={form.email}
-                  onChange={handleChange}
-                  onFocus={handleFocus}
-                  onBlur={handleFocusOut}
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <label htmlFor="password">Password:</label>
-              </th>
-              <td>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="Password"
-                  value={form.password}
-                  onChange={handleChange}
-                  onFocus={handleFocus}
-                  onBlur={handleFocusOut}
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <label htmlFor="password2">Confirm Password:</label>
-              </th>
-              <td>
-                <input
-                  type="password"
-                  id="password2"
-                  name="password2"
-                  placeholder="Confirm Password"
-                  value={form.password2}
-                  onChange={handleChange}
-                  onFocus={handleFocus}
-                  onBlur={handleFocusOut}
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div className="submitButton">
-          <button className="btn btn-gradient" type="submit">
-            Register
-          </button>
-        </div>
-      </form>
-    </div>
-  )
+  // Is authenticated
+  if (isAuthenticated) return <Redirect to="/" />
+  // If submit is successful redirect to dashboard
+  else if (redirect) return <Redirect to="/users/login" />
+  else {
+    return (
+      <div className="form">
+        {errors}
+        <form id={focused ? "focused" : "notFocused"} onSubmit={handleSubmit}>
+          <div>
+            <img src={nodejs} alt="nodejs" />
+          </div>
+          <table>
+            <tbody>
+              <tr>
+                <th>
+                  <label htmlFor="name">Name:</label>
+                </th>
+                <td>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Name"
+                    value={form.name}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    onBlur={handleFocusOut}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <label htmlFor="email">E-mail:</label>
+                </th>
+                <td>
+                  <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    placeholder="Email"
+                    value={form.email}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    onBlur={handleFocusOut}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <label htmlFor="password">Password:</label>
+                </th>
+                <td>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                    value={form.password}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    onBlur={handleFocusOut}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <label htmlFor="password2">Confirm Password:</label>
+                </th>
+                <td>
+                  <input
+                    type="password"
+                    id="password2"
+                    name="password2"
+                    placeholder="Confirm Password"
+                    value={form.password2}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    onBlur={handleFocusOut}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="submitButton">
+            <button className="btn btn-gradient" type="submit">
+              Register
+            </button>
+          </div>
+        </form>
+      </div>
+    )
+  }
 }
 
 export default Register

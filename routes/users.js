@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const bcrypt = require("bcryptjs")
 const passport = require("passport")
+const { ensureAuthenticated } = require("../config/auth")
 
 // Load User model
 const User = require("../models/User")
@@ -9,6 +10,11 @@ const User = require("../models/User")
 // Get isAuthenticated
 router.get("/isauthenticated", (req, res) => {
   res.send({ isAuthenticated: req.isAuthenticated() })
+})
+
+// Get name
+router.get("/getname", ensureAuthenticated, (req, res) => {
+  res.send({ name: req.user.name })
 })
 
 // Register
@@ -79,22 +85,25 @@ router.post("/login", (req, res, next) => {
     }
 
     if (!user) {
-      return res.send({ isLoggedIn: false })
+      return res.send({
+        isLoggedIn: false,
+        errors: ["Wrong password or email!"],
+      })
     }
 
     req.logIn(user, (err) => {
       if (err) {
         return next(err)
       }
-      return res.send({ isLoggedIn: true })
+      return res.send({ isLoggedIn: true, errors: [] })
     })
   })(req, res, next)
 })
 
 // Logout
-router.get("/logout", (req, res) => {
+router.get("/logout", ensureAuthenticated, (req, res) => {
   req.logout()
-  res.redirect("/users/login")
+  res.end()
 })
 
 module.exports = router

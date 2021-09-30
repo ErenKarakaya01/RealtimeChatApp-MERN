@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import "../App.css"
 import ToMessage from "./ToMessage"
 import FromMessage from "./FromMessage"
 import uuid from "react-uuid"
@@ -9,8 +8,6 @@ const Chat = ({ socket }) => {
   const [value, setValue] = useState("")
 
   useEffect(() => {
-    if (socket === null || socket === undefined) return // If socket is not connected returns the function
-
     socket.on("joined", (socketId) => {
       addFromMessage(`${socketId} just joined the room!`)
     })
@@ -46,7 +43,6 @@ const Chat = ({ socket }) => {
 
   const messageHandler = (event) => { // Sending message to other sockets
     if (event.key === "Enter") {
-      if (socket === null || socket === undefined) return
 
       let message = value
       setValue(prevValue => "")
