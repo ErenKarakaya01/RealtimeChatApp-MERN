@@ -61,10 +61,10 @@ const Login = ({ isAuthenticated }) => {
 
   return (
     <div className="form">
+      {errors}
       <form id={focused ? "focused" : "notFocused"} onSubmit={handleSubmit}>
-        {errors}
         <div>
-          <i className="fa fa-user" />
+          <img src={nodejs} alt="nodejs" />
         </div>
         <table>
           <tbody>

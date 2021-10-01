@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import Dashboard from "./components/Dashboard"
 import Register from "./components/Register"
 import Login from "./components/Login"
@@ -11,45 +11,49 @@ import {
 import axios from "axios"
 import Loading from "./components/Loading"
 import Logout from "./components/Logout"
+import uuid from "react-uuid"
 
-const App = () => {
+const App = ({ history }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null)
-
-  // Context value
-  const [refresh, setRefresh] = useState(false)
-  const value = { refresh, setRefresh }
 
   useEffect(() => {
     ;(async () => {
       let isAuthenticated = await axios.get("/users/isauthenticated") // Getting isAuthenticated info
       setIsAuthenticated(isAuthenticated.data.isAuthenticated)
     })()
-  }, [isAuthenticated, refresh])
+  }, [isAuthenticated])
 
-  if (isAuthenticated === null || isAuthenticated === undefined)
-    return <Loading />
+  history.listen((location, action) => {
+    setIsAuthenticated(null)
+  })
 
   if (isAuthenticated === null || isAuthenticated === undefined)
     return <Loading />
 
   return (
-    <Router>
-      <Switch>
-        <Route path="/" exact>
-          <Dashboard isAuthenticated={isAuthenticated} />
-        </Route>
-        <Route path="/users/register">
-          <Register isAuthenticated={isAuthenticated} />
-        </Route>
-        <Route path="/users/login">
-          <Login isAuthenticated={isAuthenticated} />
-        </Route>
-        <Route path="/users/logout">
-          <Logout isAuthenticated={isAuthenticated} />
-        </Route>
-      </Switch>
-    </Router>
+    <Switch>
+      <Route
+        path="/"
+        exact
+        render={() => <Dashboard isAuthenticated={isAuthenticated} />}
+        key={uuid()}
+      />
+      <Route
+        path="/users/register"
+        render={() => <Register isAuthenticated={isAuthenticated} />}
+      />
+      <Route
+        path="/users/login"
+        render={() => <Login isAuthenticated={isAuthenticated} />}
+        key={uuid()}
+      />
+      <Route
+        path="/users/logout"
+        render={() => <Logout isAuthenticated={isAuthenticated} />}
+        key={uuid()}
+      />
+    </Switch>
   )
 }
 
-export default App
+export default withRouter(App)

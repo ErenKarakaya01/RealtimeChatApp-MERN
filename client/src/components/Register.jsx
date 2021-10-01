@@ -70,7 +70,7 @@ const Register = ({ isAuthenticated }) => {
       {errors}
       <form id={focused ? "focused" : "notFocused"} onSubmit={handleSubmit}>
         <div>
-          <i className="fa fa-user" />
+          <img src={nodejs} alt="nodejs" />
         </div>
         <table>
           <tbody>
