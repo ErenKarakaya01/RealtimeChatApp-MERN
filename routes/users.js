@@ -24,15 +24,15 @@ router.post("/register", (req, res) => {
 
   // Checking the errors
   if (!name || !email || !password || !password2) {
-    errors.push({ msg: "Please enter all fields" })
+    errors.push("Please enter all fields")
   }
 
   if (password != password2) {
-    errors.push({ msg: "Passwords do not match" })
+    errors.push("Passwords do not match")
   }
 
   if (password === undefined || password.length < 6) {
-    errors.push({ msg: "Password must be at least 6 characters" })
+    errors.push("Password must be at least 6 characters")
   }
 
   if (errors.length > 0) {
@@ -43,7 +43,7 @@ router.post("/register", (req, res) => {
   } else {
     User.findOne({ email: email }).then((user) => {
       if (user) {
-        errors.push({ msg: "Email already exists" })
+        errors.push("Email already exists")
         res.send({
           isRegistered: false,
           errors,

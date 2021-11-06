@@ -69,6 +69,7 @@ try {
 
 // Routes
 app.use("/users", require("./routes/users.js"))
+app.use("/rooms", require("./routes/rooms.js"))
 
 // Socket.io
 io.on("connection", (socket) => {

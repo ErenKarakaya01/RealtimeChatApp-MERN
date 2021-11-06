@@ -1,8 +1,9 @@
-import React, { useState } from "react"
+import React, { useState, Fragment } from "react"
 import axios from "axios"
 import { Redirect } from "react-router-dom"
 import { UncontrolledAlert } from "reactstrap"
 import nodejs from "../images/nodejs.png"
+import useErrors from "../hooks/useErrors"
 
 const Login = ({ isAuthenticated }) => {
   const [redirect, setRedirect] = useState(false)
@@ -16,7 +17,7 @@ const Login = ({ isAuthenticated }) => {
   })
 
   // Alerts
-  const [errors, setErrors] = useState([])
+  const [errors, setErrors] = useErrors([])
 
   // Handles change for any input field
   const handleChange = (event) => {
@@ -35,82 +36,78 @@ const Login = ({ isAuthenticated }) => {
 
     if (res.data.isLoggedIn) {
       // If logging is successful go to dashboard else show errors
-      setErrors((prev) => [])
-      setRedirect((prev) => true)
+      setRedirect(true)
     } else {
-      setErrors((prev) => [])
-      setErrors((prev) =>
-        res.data.errors.map((error) => (
-          <UncontrolledAlert color="danger">{error}</UncontrolledAlert>
-        ))
-      )
+      setErrors(res.data.errors)
     }
   }
 
   // Toggling focused value
   const handleFocus = (e) => {
-    if (!focused) setFocused((prevFocused) => !focused)
+    if (!focused) setFocused(!focused)
   }
 
   const handleFocusOut = (e) => {
-    if (focused) setFocused((prevFocused) => !focused)
+    if (focused) setFocused(!focused)
   }
 
   if (isAuthenticated) return <Redirect to="/" /> // Is authenticated
   if (redirect) return <Redirect to="/" /> // If submit is successful redirect to dashboard
 
   return (
-    <div className="form">
-      {errors}
-      <form id={focused ? "focused" : "notFocused"} onSubmit={handleSubmit}>
-        <div>
-          <img src={nodejs} alt="nodejs" />
-        </div>
-        <table>
-          <tbody>
-            <tr>
-              <th>
-                <label htmlFor="email">E-mail:</label>
-              </th>
-              <td>
-                <input
-                  type="text"
-                  id="email"
-                  name="email"
-                  placeholder="Email"
-                  value={form.email}
-                  onChange={handleChange}
-                  onFocus={handleFocus}
-                  onBlur={handleFocusOut}
-                />
-              </td>
-            </tr>
-            <tr>
-              <th>
-                <label htmlFor="password">Password:</label>
-              </th>
-              <td>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  placeholder="Password"
-                  value={form.password}
-                  onChange={handleChange}
-                  onFocus={handleFocus}
-                  onBlur={handleFocusOut}
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div className="submitButton">
-          <button className="btn btn-gradient" type="submit">
-            Login
-          </button>
-        </div>
-      </form>
-    </div>
+    <Fragment>
+      <div className="errorBox">{errors}</div>
+      <div className="form">
+        <form id={focused ? "focused" : "notFocused"} onSubmit={handleSubmit}>
+          <div>
+            <img src={nodejs} alt="nodejs" />
+          </div>
+          <table>
+            <tbody>
+              <tr>
+                <th>
+                  <label htmlFor="email">E-mail:</label>
+                </th>
+                <td>
+                  <input
+                    type="text"
+                    id="email"
+                    name="email"
+                    placeholder="Email"
+                    value={form.email}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    onBlur={handleFocusOut}
+                  />
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  <label htmlFor="password">Password:</label>
+                </th>
+                <td>
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                    value={form.password}
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    onBlur={handleFocusOut}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div className="submitButton">
+            <button className="btn btn-gradient" type="submit">
+              Login
+            </button>
+          </div>
+        </form>
+      </div>
+    </Fragment>
   )
 }
 

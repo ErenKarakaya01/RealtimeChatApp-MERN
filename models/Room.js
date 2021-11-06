@@ -1,25 +1,25 @@
 const mongoose = require("mongoose")
+import { v4 as uuidv4 } from 'uuid'
 
-const UserSchema = new mongoose.Schema({
+const RoomSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
   },
-  email: {
+  saying: {
     type: String,
     required: true,
   },
-  password: {
+  room_id: {
     type: String,
-    required: true,
+    default: uuidv4(),
   },
-  rooms: [{ type: mongoose.Types.ObjectId, ref: "rooms" }],
   date: {
     type: Date,
     default: Date.now,
   },
 })
 
-const User = mongoose.model("user", UserSchema)
+const Room = mongoose.model("room", RoomSchema)
 
-module.exports = User
+module.exports = Room
