@@ -10,10 +10,6 @@ const RoomSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  room_id: {
-    type: String,
-    default: uuidv4(),
-  },
   date: {
     type: Date,
     default: Date.now,

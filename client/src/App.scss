@@ -43,6 +43,10 @@ nav {
   i {
     font-size: 3em !important;
     margin: 0 0.4em;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   i:last-child {
@@ -59,19 +63,51 @@ nav {
     bottom: 0;
     right: 0;
     left: 0;
-    background-color: rgba(168, 168, 168, 0.719);
+    background-color: rgba(148, 148, 148, 0.822);
 
     .modalInputs {
-      background-color: rgba(104, 104, 104, 0.911);
+      background-color: rgba(104, 104, 104, 0.685);
+      width: 40vw;
+      height: 50vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 1em;
+      position: relative;
+
+      #closeIcon {
+        position: absolute;
+        top: 0;
+        right: -2em;
+
+        i {
+          color: rgb(214, 0, 0);
+          font-size: 0.1em;
+          font-weight: 0.1em;
+        }
+      }
+      
+      .submitButton {
+        bottom: 0;
+        margin: auto;
+        height: min-content;
+      }
 
       input {
         border: 0.1em solid rgba(146, 221, 255, 0.651);
         border-radius: 0.6em;
         font-size: 1.1em;
         padding: 0.5em;
+        width: 27em;
         display: block;
-        margin: 6em;
-        width: 80%;
+        margin: auto;
+        margin-top: 2em;
+        margin-bottom: 2em;
+        transition: outline 0.1s linear;
+
+        &:focus {
+          outline: 0.2em solid #9efcff;
+        }
       }
     }
   }
@@ -250,73 +286,73 @@ nav {
       font-size: 1.1em;
       padding: 0.5em;
     }
-
-    .submitButton {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .btn {
-        font-family: "Indie Flower", cursive;
-        position: relative;
-        padding: 1rem 3rem;
-        font-size: 1.5rem;
-        line-height: 1.5;
-        color: black;
-        text-decoration: none;
-        background-color: white;
-        border: transparent;
-        outline: transparent;
-        cursor: pointer;
-        user-select: none;
-        white-space: nowrap;
-        animation: glow 8s linear infinite;
-        font-weight: 900;
-
-        &-gradient {
-          background: linear-gradient(90deg, #a8a8a8, #757575, #a8a8a8);
-          background-size: 300%;
-          border-radius: 2em;
-
-          &::before {
-            position: absolute;
-            content: "";
-            top: -0.1em;
-            left: -0.1em;
-            bottom: -0.1em;
-            right: -0.1em;
-            z-index: -1;
-            background: inherit;
-            background-size: inherit;
-            border-radius: 4em;
-            opacity: 0;
-            transition: 0.5s;
-          }
-
-          &:hover {
-            opacity: 0.8;
-          }
-
-          &:hover::before {
-            opacity: 1;
-            filter: blur(20px);
-            animation: glow 8s linear infinite;
-          }
-        }
-      }
-
-      @keyframes glow {
-        to {
-          background-position: 300%;
-        }
-      }
-    }
   }
 }
 
 .errorBox {
-  z-index: 2;
+  z-index: 4;
   position: absolute;
   top: 1em;
   right: 1em;
+}
+
+.submitButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .btn {
+    font-family: "Indie Flower", cursive;
+    position: relative;
+    padding: 1rem 3rem;
+    font-size: 1.5rem;
+    line-height: 1.5;
+    color: black;
+    text-decoration: none;
+    background-color: white;
+    border: transparent;
+    outline: transparent;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    animation: glow 8s linear infinite;
+    font-weight: 900;
+
+    &-gradient {
+      background: linear-gradient(90deg, #a8a8a8, #757575, #a8a8a8);
+      background-size: 300%;
+      border-radius: 2em;
+
+      &::before {
+        position: absolute;
+        content: "";
+        top: -0.1em;
+        left: -0.1em;
+        bottom: -0.1em;
+        right: -0.1em;
+        z-index: -1;
+        background: inherit;
+        background-size: inherit;
+        border-radius: 4em;
+        opacity: 0;
+        transition: 0.5s;
+      }
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      &:hover::before {
+        opacity: 1;
+        filter: blur(20px);
+        animation: glow 8s linear infinite;
+      }
+    }
+  }
+
+  @keyframes glow {
+    to {
+      background-position: 300%;
+    }
+  }
 }

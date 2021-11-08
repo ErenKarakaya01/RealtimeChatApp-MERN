@@ -1,9 +1,11 @@
 import React, { useState } from "react"
 import { NavLink, BrowserRouter as Router } from "react-router-dom"
 import AddRoomModal from "./AddRoomModal"
+import JoinRoomModal from "./JoinRoomModal"
 
 const Navbar = () => {
   const [addRoom, setAddRoom] = useState(false)
+  const [joinRoom, setJoinRoom] = useState(false)
 
   return (
     <Router>
@@ -13,8 +15,9 @@ const Navbar = () => {
         </div>
         <div className="right">
           <i className="fa fa-plus" onClick={() => setAddRoom((prev) => !prev)} />
-          {addRoom ? <AddRoomModal /> : null}
-          <i className="fa fa-sign-in" />
+          <AddRoomModal display={addRoom} setDisplay={setAddRoom} />
+          <i className="fa fa-sign-in" onClick={() => setJoinRoom((prev) => !prev)} />
+          <JoinRoomModal display={joinRoom} setDisplay={setJoinRoom} />
           <i className="fa fa-user" />
         </div>
       </nav>
