@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  rooms: [{ type: mongoose.Types.ObjectId, ref: "rooms" }],
+  rooms: [{ type: mongoose.Types.ObjectId, ref: "room" }],
   date: {
     type: Date,
     default: Date.now,

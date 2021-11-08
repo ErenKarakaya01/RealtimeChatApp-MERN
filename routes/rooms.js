@@ -45,7 +45,7 @@ router.post("/createroom", ensureAuthenticated, async (req, res) => {
   }
 })
 
-router.post("/joinroom", async (req, res) => {
+router.post("/joinroom", ensureAuthenticated, async (req, res) => {
   try {
     const { room } = req.body
 
@@ -68,7 +68,9 @@ router.post("/joinroom", async (req, res) => {
 
       res.send({ errors, isPostSuccessful: true })
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 module.exports = router

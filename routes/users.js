@@ -4,12 +4,24 @@ const bcrypt = require("bcryptjs")
 const passport = require("passport")
 const { ensureAuthenticated } = require("../config/auth")
 
-// Load User model
+// Load models
 const User = require("../models/User")
+const Room = require("../models/Room")
 
 // Get isAuthenticated
 router.get("/isauthenticated", (req, res) => {
   res.send({ isAuthenticated: req.isAuthenticated() })
+})
+
+// Get Rooms
+router.get("/getrooms", ensureAuthenticated, async (req, res) => {
+  try {
+    let user = await User.findById(req.user._id).populate({ path: "rooms"})
+
+    res.send({ rooms: user.rooms })
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 // Get name
