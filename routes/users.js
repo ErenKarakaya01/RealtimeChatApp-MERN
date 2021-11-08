@@ -68,6 +68,8 @@ router.post("/register", (req, res) => {
           password,
         })
 
+        newUser.rooms.push("618935472b7617488750c1ff")
+
         bcrypt.genSalt(10, (err, salt) => {
           // Encrypting the password
           bcrypt.hash(newUser.password, salt, (err, hash) => {

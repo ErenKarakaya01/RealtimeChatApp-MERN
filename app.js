@@ -77,14 +77,13 @@ io.on("connection", (socket) => {
 
   socket.on("joinRoom", (room) => {
     socket.join(room)
-
     lastRoom = room
 
     socket.to(room).emit("joined", socket.id)
   })
 
   socket.on("sendMessage", (message) => {
-    socket.to(lastRoom).emit("receiveMessage", message)
+    socket.to(socket.room).emit("receiveMessage", message)
   })
 
   socket.on("disconnect", () => {

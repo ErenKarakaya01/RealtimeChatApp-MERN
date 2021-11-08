@@ -8,8 +8,6 @@ const Rooms = ({ socket }) => {
   useEffect(() => {
     (async () => {
       let res = await axios.get("/users/getrooms")
-
-      console.log(res.data.rooms)
       
       if (res.data.rooms) {
         setRooms(res.data.rooms)
