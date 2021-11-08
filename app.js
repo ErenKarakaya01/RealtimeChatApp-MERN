@@ -83,7 +83,7 @@ io.on("connection", (socket) => {
   })
 
   socket.on("sendMessage", (message) => {
-    socket.to(socket.room).emit("receiveMessage", message)
+    socket.to(lastRoom).emit("receiveMessage", message)
   })
 
   socket.on("disconnect", () => {
