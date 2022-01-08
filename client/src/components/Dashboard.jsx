@@ -5,15 +5,22 @@ import Rooms from "./Rooms"
 import Chat from "./Chat"
 import Navbar from "./Navbar"
 import Loading from "./Loading"
+import axios from "axios"
 
 const Dashboard = ({ isAuthenticated }) => {
   const [socket, setSocket] = useState(null)
+  const [userName, setUserName] = useState("")
 
   useEffect(() => {
-    const newSocket = io("http://localhost:8080")
-    setSocket(newSocket) // Sets the socket
+    ;(async () => {
+      let { data } = await axios.get("/users/getname")
+      setUserName(data.name)
 
-    return () => newSocket.close() // Closing the socket
+      const newSocket = io("http://localhost:8080")
+      setSocket(newSocket) // Sets the socket
+
+      return () => newSocket.close() // Closing the socket
+    })()
   }, [])
 
   if (!isAuthenticated) return <Redirect to="/users/login" /> // Is authenticated
@@ -23,8 +30,8 @@ const Dashboard = ({ isAuthenticated }) => {
     <Fragment>
       <Navbar />
       <div className="dashboard">
-        <Rooms socket={socket} />
-        <Chat socket={socket} />
+        <Rooms socket={socket} userName={userName} />
+        <Chat socket={socket} userName={userName} />
       </div>
     </Fragment>
   )

@@ -83,7 +83,7 @@ nav {
       #closeIcon {
         position: absolute;
         top: 0;
-        right: -2em;
+        right: 0;
 
         i {
           color: rgb(214, 0, 0);
@@ -200,12 +200,33 @@ nav {
     display: inline-block;
     height: 100%;
     width: 78%;
-    padding-top: 2em;
     background-color: #d4d4d43d;
 
-    .messages {
-      height: 90%;
+    .roomInfo {
+      height: 10%;
       width: 100%;
+      padding-bottom: 2em;
+      display: flex;
+      justify-content: space-between;
+      padding: 1em;
+      background-color: aqua;
+
+      .roomName {
+        font-weight: bold;
+      }
+
+      .roomId {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    .messages {
+      height: 80%;
+      width: 100%;
+      overflow: scroll;
 
       .toMessage {
         border-radius: 1em 0 1em 1em;
@@ -213,7 +234,7 @@ nav {
         max-width: 80ch;
         width: fit-content;
         word-wrap: break-word;
-        padding: 1em;
+        padding: 0.5em 1em;
         margin: 0.4em 2em;
         margin-top: 0;
         margin-left: auto;
@@ -225,10 +246,24 @@ nav {
         max-width: 80ch;
         width: fit-content;
         word-wrap: break-word;
-        padding: 1em;
+        padding: 0.5em 1em;
         margin: 0.4em 2em;
         margin-top: 0;
         margin-right: auto;
+      }
+
+      .messageInfo {
+        display: flex;
+        justify-content: space-between;
+
+        * {
+          font-size: 0.85em;
+          margin: 0 0.5em;
+        }
+
+        .userName {
+          font-weight: bold;
+        }
       }
     }
 
@@ -243,7 +278,7 @@ nav {
       input {
         width: 95%;
         height: 2em;
-        border-radius: 2em;
+        border-radius: 1em;
         padding: 1.2em;
         font-size: 1.1em;
       }

@@ -13,6 +13,8 @@ const session = require("express-session")
 const cookieParser = require("cookie-parser")
 const cors = require("cors")
 const User = require("./models/User")
+const Room = require("./models/Room")
+const Message = require("./models/Message")
 
 // Bodyparser middleware
 app.use(express.json())
@@ -62,7 +64,6 @@ try {
     })
     console.log("MongoDB connected...")
   })()
-
 } catch (e) {
   console.log(e)
 }
@@ -74,20 +75,35 @@ app.use("/rooms", require("./routes/rooms.js"))
 // Socket.io
 io.on("connection", (socket) => {
   let lastRoom
+  let lastUserName
 
-  socket.on("joinRoom", (room) => {
+  socket.on("joinRoom", async (room, userName) => {
     socket.join(room)
     lastRoom = room
+    lastUserName = userName
 
-    socket.to(room).emit("joined", socket.id)
+    let roomInfo = await Room.findById(room)
+    socket.emit("roomInfo", roomInfo)
+
+    socket.to(room).emit("joined", userName)
   })
 
-  socket.on("sendMessage", (message) => {
-    socket.to(lastRoom).emit("receiveMessage", message)
+  socket.on("sendMessage", async (from, message) => {
+    let newMessage = new Message({
+      from,
+      message,
+    })
+
+    let { _id, date } = await newMessage.save()
+    let room = await Room.findById(lastRoom)
+    room.messages.push(_id)
+    await room.save()
+
+    socket.to(lastRoom).emit("receiveMessage", from, message, date)
   })
 
   socket.on("disconnect", () => {
-    socket.to(lastRoom).emit("disconnected", socket.id)
+    socket.to(lastRoom).emit("disconnected", lastUserName)
   })
 })
 

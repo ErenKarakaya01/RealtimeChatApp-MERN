@@ -10,7 +10,7 @@ const RoomSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  messages: [String],
+  messages: [{ type: mongoose.Types.ObjectId, ref: "message" }],
   date: {
     type: Date,
     default: Date.now,

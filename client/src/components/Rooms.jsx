@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import axios from "axios"
 import Room from "./Room"
 
-const Rooms = ({ socket }) => {
+const Rooms = ({ socket, userName }) => {
   let [rooms, setRooms] = useState([])
   
   useEffect(() => {
@@ -21,7 +21,7 @@ const Rooms = ({ socket }) => {
     <div className="rooms">
       {
         rooms.map((room, i) => (
-          <Room name={room.name} saying={room.saying} room={room._id} socket={socket ? socket : null} key={i} />
+          <Room name={room.name} saying={room.saying} room={room._id} socket={socket ? socket : null} userName={userName} key={i} />
         ))
       }
     </div>

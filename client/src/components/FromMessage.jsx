@@ -1,9 +1,13 @@
 import React from "react"
 
-const FromMessage = ({ message }) => {
+const FromMessage = ({ from, message, date }) => {
   return (
     <div className="fromMessage">
-      { message }
+      <div className="messageInfo">
+        <div className="userName">{from}</div>
+        <div>{date}</div>
+      </div>
+      <div>{message}</div>
     </div>
   )
 }
