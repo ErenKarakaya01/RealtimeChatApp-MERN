@@ -16,6 +16,10 @@ const User = require("./models/User")
 const Room = require("./models/Room")
 const Message = require("./models/Message")
 
+const dotenv = require('dotenv')
+
+dotenv.config({ path: './config/config.env' })
+
 // Bodyparser middleware
 app.use(express.json())
 
@@ -52,8 +56,7 @@ app.use(
   })
 )
 
-const db =
-  "mongodb+srv://sprinkai:eren123@chatappdb.l7biy.mongodb.net/ChatAppDB?retryWrites=true&w=majority"
+const db = process.env.MONGO_URI
 
 try {
   ;(async () => {
@@ -109,6 +112,10 @@ io.on("connection", (socket) => {
   })
 })
 
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'))
+  app.get('*', (req,res ) => res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')))
+}
 
 const port = process.env.port || 8080
 
