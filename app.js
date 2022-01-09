@@ -9,18 +9,17 @@ const io = require("socket.io")(server, {
 })
 const mongoose = require("mongoose")
 const passport = require("passport")
-const session = require("cookie-session")
+const session = require("express-session")
+const MemoryStore = require('memorystore')(session)
 const cookieParser = require("cookie-parser")
 const cors = require("cors")
 const User = require("./models/User")
 const Room = require("./models/Room")
 const Message = require("./models/Message")
 
-const dotenv = require("dotenv")
+const dotenv = require('dotenv')
 
-dotenv.config({ path: "./config/config.env" })
-
-app.set("port", process.env.PORT || 8080)
+dotenv.config({ path: './config/config.env' })
 
 // Bodyparser middleware
 app.use(express.json())
@@ -29,28 +28,18 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use(express.static(path.join(__dirname, "public")))
 
-//-momery unleaked---------
-app.set("trust proxy", 1)
-
+// Session middleware
 app.use(
   session({
-    cookie: {
-      secure: true,
-      maxAge: 60000,
-    },
-    store: new RedisStore(),
     secret: "secret",
-    saveUninitialized: true,
     resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 86400000 },
+    store: new MemoryStore({
+      checkPeriod: 86400000 // prune expired entries every 24h
+    }),
   })
 )
-
-app.use(function (req, res, next) {
-  if (!req.session) {
-    return next(new Error("Oh no")) //handle error
-  }
-  next() //otherwise continue
-})
 
 // Passport middleware
 app.use(passport.initialize())
@@ -98,7 +87,7 @@ io.on("connection", (socket) => {
 
   socket.on("joinRoom", async (room, userName) => {
     if (room === lastRoom) return
-
+    
     socket.join(room)
     lastRoom = room
     lastUserName = userName
@@ -128,15 +117,12 @@ io.on("connection", (socket) => {
   })
 })
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"))
-  app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
-  )
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'))
+  app.get('*', (req,res ) => res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')))
 }
 
 const port = process.env.port || 8080
-console.log(port)
 
 server.listen(port, () => {
   console.log(`Server is listening on port ${port}`)
