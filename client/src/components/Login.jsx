@@ -1,7 +1,6 @@
 import React, { useState, Fragment } from "react"
 import axios from "axios"
 import { Redirect } from "react-router-dom"
-import { UncontrolledAlert } from "reactstrap"
 import nodejs from "../images/nodejs.png"
 import useErrors from "../hooks/useErrors"
 

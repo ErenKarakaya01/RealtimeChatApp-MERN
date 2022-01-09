@@ -210,6 +210,7 @@ nav {
       justify-content: space-between;
       padding: 1em;
       background-color: aqua;
+      margin-bottom: 1em;
 
       .roomName {
         font-weight: bold;
@@ -221,10 +222,14 @@ nav {
         justify-content: center;
         align-items: center;
       }
+      
+      .saying {
+        font-style: italic;
+      }
     }
 
     .messages {
-      height: 80%;
+      height: calc(80% - 1em);
       width: 100%;
       overflow: scroll;
 

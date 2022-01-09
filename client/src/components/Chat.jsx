@@ -1,30 +1,50 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import ToMessage from "./ToMessage"
 import FromMessage from "./FromMessage"
 import uuid from "react-uuid"
+import axios from "axios"
 
 const Chat = ({ socket, userName }) => {
   const [messages, setMessages] = useState([])
   const [value, setValue] = useState("")
   const [roomInfo, setRoomInfo] = useState({ _id: "No Room!"})
+  const messagesRef = useRef(null)
 
   useEffect(() => {
     socket.on("joined", (userName) => {
-      addFromMessage(`${userName} just joined the room!`)
+      addFromMessage("", `${userName} just joined the room!`, new Date())
     })
 
     socket.on("receiveMessage", (from, message, date) => {
       addFromMessage(from, message, date)
     })
 
-    socket.on("roomInfo", (roomInfo) => {
+    socket.on("roomInfo", async (roomInfo) => {
       setRoomInfo(roomInfo)
+
+      let res = await axios.get(`/rooms/getmessages/${roomInfo._id}`) // Getting old messages that were written before
+      let messagesArray = res.data.room.messages
+
+      for (let message of messagesArray) {
+        let funcWillBeUsed
+
+        if (message.from === userName)
+          funcWillBeUsed = addToMessage
+        else
+          funcWillBeUsed = addFromMessage
+          
+        funcWillBeUsed(message.from, message.message, message.date)
+      }
     })
 
     socket.on("disconnected", (userName) => {
-      addFromMessage(`${userName} just disconnected from the room!`)
+      addFromMessage("", `${userName} just disconnected from the room!`, new Date())
     })
   }, [])
+
+  useEffect(() => { // Updating scroll height whenever messages change
+    updateScroll()
+  }, [messages])
 
   const addFromMessage = (from, message, date) => {
     setMessages((prevMessages) => [
@@ -51,6 +71,7 @@ const Chat = ({ socket, userName }) => {
   }
 
   const formatDate = (date) => {
+    date = new Date(date)
     var hours = date.getHours();
     var minutes = date.getMinutes();
     var ampm = hours >= 12 ? 'pm' : 'am';
@@ -61,7 +82,13 @@ const Chat = ({ socket, userName }) => {
     return strTime;
   }
 
+  const updateScroll = () => {
+    messagesRef.current.scrollTop = messagesRef.current.scrollHeight
+  }
+
   const messageHandler = (event) => { // Sending message to other sockets
+    if (value === "") return
+    if (roomInfo._id === "No Room!") return
     if (event.key === "Enter") {
 
       let message = value
@@ -88,7 +115,7 @@ const Chat = ({ socket, userName }) => {
           <div className="roomId"> {`Room Id: ${roomInfo._id}`}</div>
         </div>
       </div>
-      <div className="messages">
+      <div className="messages" ref={messagesRef}>
         {messages}
       </div>
       <div className="writeMessage">

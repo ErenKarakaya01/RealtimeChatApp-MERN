@@ -15,6 +15,15 @@ router.get("/:id", ensureAuthenticated, async (req, res) => {
   }
 })
 
+router.get("/getmessages/:id", ensureAuthenticated, async (req, res) => {
+  try {
+    let room = await Room.findById(req.params.id).populate({ path: "messages"})
+    res.send({ room })
+  } catch (error) {
+    console.log(error)
+  }
+})
+
 router.post("/createroom", ensureAuthenticated, async (req, res) => {
   try {
     const { name, saying } = req.body

@@ -78,6 +78,8 @@ io.on("connection", (socket) => {
   let lastUserName
 
   socket.on("joinRoom", async (room, userName) => {
+    if (room === lastRoom) return
+    
     socket.join(room)
     lastRoom = room
     lastUserName = userName
