@@ -232,6 +232,7 @@ nav {
       height: calc(80% - 1em);
       width: 100%;
       overflow: scroll;
+      scroll-behavior: smooth;
 
       .toMessage {
         border-radius: 1em 0 1em 1em;
