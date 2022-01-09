@@ -9,7 +9,7 @@ const io = require("socket.io")(server, {
 })
 const mongoose = require("mongoose")
 const passport = require("passport")
-const session = require("express-session")
+const session = require("cookie-session")
 const cookieParser = require("cookie-parser")
 const cors = require("cors")
 const User = require("./models/User")
