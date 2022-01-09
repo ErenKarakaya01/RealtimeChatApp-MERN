@@ -16,11 +16,11 @@ const User = require("./models/User")
 const Room = require("./models/Room")
 const Message = require("./models/Message")
 
-const dotenv = require('dotenv')
+const dotenv = require("dotenv")
 
-dotenv.config({ path: './config/config.env' })
+dotenv.config({ path: "./config/config.env" })
 
-app.set('port', (process.env.PORT || 8080))
+app.set("port", process.env.PORT || 8080)
 
 // Bodyparser middleware
 app.use(express.json())
@@ -29,14 +29,28 @@ app.use(express.urlencoded({ extended: false }))
 
 app.use(express.static(path.join(__dirname, "public")))
 
-// Session middleware
+//-momery unleaked---------
+app.set("trust proxy", 1)
+
 app.use(
   session({
+    cookie: {
+      secure: true,
+      maxAge: 60000,
+    },
+    store: new RedisStore(),
     secret: "secret",
-    resave: false,
     saveUninitialized: true,
+    resave: false,
   })
 )
+
+app.use(function (req, res, next) {
+  if (!req.session) {
+    return next(new Error("Oh no")) //handle error
+  }
+  next() //otherwise continue
+})
 
 // Passport middleware
 app.use(passport.initialize())
@@ -84,7 +98,7 @@ io.on("connection", (socket) => {
 
   socket.on("joinRoom", async (room, userName) => {
     if (room === lastRoom) return
-    
+
     socket.join(room)
     lastRoom = room
     lastUserName = userName
@@ -114,9 +128,11 @@ io.on("connection", (socket) => {
   })
 })
 
-if(process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'))
-  app.get('*', (req,res ) => res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html')))
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"))
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  )
 }
 
 const port = process.env.port || 8080
