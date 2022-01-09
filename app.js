@@ -128,7 +128,8 @@ const port = process.env.port || 8080
 server.listen(port, () => {
   console.log(`Server is listening on port ${port}`)
 })
-} catch {
-  console.log("eren")
+} catch (e) {
+  console.log(e)
+  
 }
 
