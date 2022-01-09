@@ -20,6 +20,8 @@ const dotenv = require('dotenv')
 
 dotenv.config({ path: './config/config.env' })
 
+app.set('port', (process.env.PORT || 8080))
+
 // Bodyparser middleware
 app.use(express.json())
 
