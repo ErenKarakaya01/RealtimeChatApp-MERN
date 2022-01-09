@@ -1,4 +1,5 @@
-const path = require("path")
+try {
+  const path = require("path")
 const express = require("express")
 const app = express()
 const server = require("http").createServer(app)
@@ -127,3 +128,7 @@ const port = process.env.port || 8080
 server.listen(port, () => {
   console.log(`Server is listening on port ${port}`)
 })
+} catch {
+  console.log("eren")
+}
+
