@@ -3,10 +3,17 @@ import { NavLink, BrowserRouter as Router } from "react-router-dom"
 import AddRoomModal from "./AddRoomModal"
 import JoinRoomModal from "./JoinRoomModal"
 import ReactTooltip from "react-tooltip"
+import axios from "axios"
 
 const Navbar = () => {
   const [addRoom, setAddRoom] = useState(false)
   const [joinRoom, setJoinRoom] = useState(false)
+
+  const handleLogout = async () => {
+    await axios.get("/users/logout")
+
+    window.location.reload()
+  }
 
   return (
     <Router>
@@ -32,7 +39,7 @@ const Navbar = () => {
           <JoinRoomModal display={joinRoom} setDisplay={setJoinRoom} />
 
           <div className="logout">
-            <a href="/users/logout">Logout</a>
+            <a onClick={handleLogout}>Logout</a>
           </div>
 
           <ReactTooltip id="registerTip1" place="bottom" effect="solid">

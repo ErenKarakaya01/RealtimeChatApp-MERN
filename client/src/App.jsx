@@ -9,7 +9,6 @@ import {
 } from "react-router-dom"
 import axios from "axios"
 import Loading from "./components/Loading"
-import Logout from "./components/Logout"
 import uuid from "react-uuid"
 
 const App = ({ history }) => {
@@ -44,11 +43,6 @@ const App = ({ history }) => {
       <Route
         path="/users/login"
         render={() => <Login isAuthenticated={isAuthenticated} />}
-        key={uuid()}
-      />
-      <Route
-        path="/users/logout"
-        render={() => <Logout isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}
         key={uuid()}
       />
     </Switch>
