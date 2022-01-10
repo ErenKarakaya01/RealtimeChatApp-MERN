@@ -48,7 +48,7 @@ const App = ({ history }) => {
       />
       <Route
         path="/users/logout"
-        render={() => <Logout isAuthenticated={isAuthenticated} />}
+        render={() => <Logout isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />}
         key={uuid()}
       />
     </Switch>
