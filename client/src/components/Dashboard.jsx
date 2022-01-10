@@ -13,13 +13,16 @@ const Dashboard = ({ isAuthenticated }) => {
 
   useEffect(() => {
     ;(async () => {
-      let { data } = await axios.get("/users/getname")
+      if (isAuthenticated) {
+        let { data } = await axios.get("/users/getname")
       setUserName(data.name)
 
       const newSocket = io("/")
       setSocket(newSocket) // Sets the socket
 
       return () => newSocket.close() // Closing the socket
+      }
+      
     })()
   }, [])
 

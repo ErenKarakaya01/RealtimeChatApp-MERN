@@ -100,6 +100,9 @@ const Login = ({ isAuthenticated }) => {
             </tbody>
           </table>
           <div className="submitButton">
+            <a href="/users/register" className="btn btn-gradient">
+              Register
+            </a>
             <button className="btn btn-gradient" type="submit">
               Login
             </button>

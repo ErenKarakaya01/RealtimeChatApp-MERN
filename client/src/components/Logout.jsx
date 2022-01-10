@@ -11,13 +11,15 @@ const Logout = ({ isAuthenticated }) => {
       await axios.get("/users/logout")
 
       setRedirect((prev) => true)
-      window.location.reload()
     })()
   }, [])
 
   // Is authenticated
   if (!isAuthenticated) return <Redirect to="/" />
-  else if (redirect) return <Redirect to="/users/login" />
+  else if (redirect) {
+    window.location.reload()
+    return <Redirect to="/users/login" />
+  }
   else return <Loading />
 }
 
