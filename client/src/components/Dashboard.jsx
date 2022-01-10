@@ -16,7 +16,7 @@ const Dashboard = ({ isAuthenticated }) => {
       let { data } = await axios.get("/users/getname")
       setUserName(data.name)
 
-      const newSocket = io("https://sprinkaichat.herokuapp.com:8080")
+      const newSocket = io("https://sprinkaichat.herokuapp.com")
       setSocket(newSocket) // Sets the socket
 
       return () => newSocket.close() // Closing the socket
