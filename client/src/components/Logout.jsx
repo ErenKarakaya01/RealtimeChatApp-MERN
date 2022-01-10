@@ -11,6 +11,7 @@ const Logout = ({ isAuthenticated }) => {
       await axios.get("/users/logout")
 
       setRedirect((prev) => true)
+      window.location.reload()
     })()
   }, [])
 
