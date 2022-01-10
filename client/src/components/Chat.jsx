@@ -21,6 +21,7 @@ const Chat = ({ socket, userName }) => {
 
     socket.on("roomInfo", async (roomInfo) => {
       setRoomInfo(roomInfo)
+      setMessages([])
 
       let res = await axios.get(`/rooms/getmessages/${roomInfo._id}`) // Getting old messages that were written before
       let messagesArray = res.data.room.messages
